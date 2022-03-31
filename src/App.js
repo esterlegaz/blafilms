@@ -8,7 +8,7 @@ function App() {
   const [searchResult, setSearchResult] = useState();
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [errorMessage, setErrorMessage] = useState();
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     search();
@@ -31,19 +31,19 @@ function App() {
       data.Search = filteredResult;
 
       setSearchResult(data);
+      setErrorMessage('');
     } else {
       setErrorMessage(data.Error);
     }
   }
 
   const goToNextPage = () => {
-    setCurrentPage(currentPage + 1);
+    const maxPages = Math.ceil(searchResult.totalResults / 10);
+    if (currentPage < maxPages) setCurrentPage(currentPage + 1);
   }
 
   const goToPreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
   }
 
   return (
