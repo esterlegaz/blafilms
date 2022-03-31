@@ -16,7 +16,21 @@ function App() {
   const search = async () => {
     const response = await fetch(`http://www.omdbapi.com/?apikey=a461e386&s=${searchTerm}&page=${currentPage}`)
     const data = await response.json();
-    if (!data.Error) setSearchResult(data);
+    if (!data.Error) {
+      const existingIds = [];
+      const filteredResult = [];
+
+      data.Search.map(searchResult => {
+        if (existingIds.indexOf(searchResult.imdbID) === -1) {
+          existingIds.push(searchResult.imdbID);
+          filteredResult.push(searchResult);
+        }
+      })
+
+      data.Search = filteredResult;
+
+      setSearchResult(data);
+    }
   }
 
   const goToNextPage = () => {
