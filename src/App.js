@@ -6,11 +6,12 @@ import { ReactComponent as ChevronRight } from './chevron-right.svg'
 
 function App() {
   const [searchResult, setSearchResult] = useState();
-  const [searchTerm, setSearchTerm] = useState();
+  const [searchTerm, setSearchTerm] = useState('king');
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const search = async () => {
-      const response = await fetch(`http://www.omdbapi.com/?apikey=a461e386&s=${searchTerm}`)
+      const response = await fetch(`http://www.omdbapi.com/?apikey=a461e386&s=${searchTerm}&page=${currentPage}`)
       const data = await response.json();
 
       if (!searchResult) {
@@ -18,20 +19,38 @@ function App() {
       }
     }
 
-    search()
+    search();
   })
+
+  const goToNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  }
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  }
 
   return (
     <div className="App">
       <div className="search">
-        <input type="text" placeholder="Search..." onChange={(e) => setSearchTerm(e.target.value)} />
+        <input
+          type="text"
+          placeholder="Search..."
+          onChange={(e) => setSearchTerm(e.target.value)}
+          value={searchTerm}
+        />
         <button>Search</button>
       </div>
       {!searchResult ? (
         <p>No results yet</p>
       ) : (
         <div className="search-results">
-          <div className="chevron">
+          <div
+            className="chevron"
+            onClick={goToPreviousPage}
+          >
             <ChevronLeft />
           </div>
           <div className="search-results-list">
@@ -48,7 +67,10 @@ function App() {
               </div>
             ))}
           </div>
-          <div className="chevron">
+          <div
+            className="chevron"
+            onClick={goToNextPage}
+          >
             <ChevronRight />
           </div>
         </div>
