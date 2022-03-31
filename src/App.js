@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.scss';
 import List from './components/List/List'
 import Search from './components/Search/Search';
 
 function App() {
+  const didMount = useRef(false);
   const [searchResult, setSearchResult] = useState();
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    search();
+    if (didMount.current) {
+      search();
+    } else {
+      didMount.current = true;
+    }
   }, [currentPage]);
 
   const search = async () => {
@@ -32,6 +37,7 @@ function App() {
       setSearchResult(data);
       setErrorMessage('');
     } else {
+      setSearchResult();
       setErrorMessage(data.Error);
     }
   }

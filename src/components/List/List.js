@@ -8,7 +8,7 @@ const List = (props) => {
     const { results, goToNextPage, goToPreviousPage, searchTerm, errorMessage } = props;
     return (
         <>
-            {!results &&
+            {!results && !errorMessage &&
                 <p className="search-results-empty">No results yet</p>
             }
             {results &&
