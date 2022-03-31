@@ -8,6 +8,7 @@ function App() {
   const [searchResult, setSearchResult] = useState();
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [errorMessage, setErrorMessage] = useState();
 
   useEffect(() => {
     search();
@@ -30,6 +31,8 @@ function App() {
       data.Search = filteredResult;
 
       setSearchResult(data);
+    } else {
+      setErrorMessage(data.Error);
     }
   }
 
@@ -57,38 +60,42 @@ function App() {
         >Search
         </button>
       </div>
-      {!searchResult ? (
-        <p>No results yet</p>
-      ) : (
-        <div className="search-results">
-          <div
-            className="chevron"
-            onClick={goToPreviousPage}
-          >
-            <ChevronLeft />
-          </div>
-          <div className="search-results-list">
-            {searchResult.Search.map(result => (
-              <div key={result.imdbID} className="search-item">
-                <img
-                  src={result.Poster === 'N/A' ? placeholderImg : result.Poster}
-                  alt="poster"
-                />
-                <div className="search-item-data">
-                  <div className="title">{result.Title}</div>
-                  <div className="meta">{`${result.Type} | ${result.Year}`}</div>
+      {!searchResult ?
+        (
+          <p>No results yet</p>
+        ) : (
+          <div className="search-results">
+            <div
+              className="chevron"
+              onClick={goToPreviousPage}
+            >
+              <ChevronLeft />
+            </div>
+            <div className="search-results-list">
+              {searchResult?.Search?.map(result => (
+                <div key={result.imdbID} className="search-item">
+                  <img
+                    src={result.Poster === 'N/A' ? placeholderImg : result.Poster}
+                    alt="poster"
+                  />
+                  <div className="search-item-data">
+                    <div className="title">{result.Title}</div>
+                    <div className="meta">{`${result.Type} | ${result.Year}`}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div
+              className="chevron"
+              onClick={goToNextPage}
+            >
+              <ChevronRight />
+            </div>
           </div>
-          <div
-            className="chevron"
-            onClick={goToNextPage}
-          >
-            <ChevronRight />
-          </div>
-        </div>
-      )}
+        )}
+      {searchTerm && errorMessage &&
+        <p>{errorMessage}</p>
+      }
     </div>
   )
 }
