@@ -5,18 +5,16 @@ import { ReactComponent as ChevronLeft } from './chevron-left.svg'
 import { ReactComponent as ChevronRight } from './chevron-right.svg'
 
 function App() {
-  const [searchResult, setSearchResult] = useState()
+  const [searchResult, setSearchResult] = useState();
+  const [searchTerm, setSearchTerm] = useState();
 
   useEffect(() => {
     const search = async () => {
-      const response = await fetch(
-        'http://www.omdbapi.com/?apikey=a461e386&s=king',
-      )
-
-      const data = await response.json()
+      const response = await fetch(`http://www.omdbapi.com/?apikey=a461e386&s=${searchTerm}`)
+      const data = await response.json();
 
       if (!searchResult) {
-        setSearchResult(data)
+        setSearchResult(data);
       }
     }
 
@@ -26,7 +24,7 @@ function App() {
   return (
     <div className="App">
       <div className="search">
-        <input type="text" placeholder="Search..." />
+        <input type="text" placeholder="Search..." onChange={(e) => setSearchTerm(e.target.value)} />
         <button>Search</button>
       </div>
       {!searchResult ? (
