@@ -6,21 +6,18 @@ import { ReactComponent as ChevronRight } from './chevron-right.svg'
 
 function App() {
   const [searchResult, setSearchResult] = useState();
-  const [searchTerm, setSearchTerm] = useState('king');
+  const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    const search = async () => {
-      const response = await fetch(`http://www.omdbapi.com/?apikey=a461e386&s=${searchTerm}&page=${currentPage}`)
-      const data = await response.json();
-
-      if (!searchResult) {
-        setSearchResult(data);
-      }
-    }
-
     search();
-  })
+  }, [currentPage]);
+
+  const search = async () => {
+    const response = await fetch(`http://www.omdbapi.com/?apikey=a461e386&s=${searchTerm}&page=${currentPage}`)
+    const data = await response.json();
+    if (!data.Error) setSearchResult(data);
+  }
 
   const goToNextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -41,7 +38,10 @@ function App() {
           onChange={(e) => setSearchTerm(e.target.value)}
           value={searchTerm}
         />
-        <button>Search</button>
+        <button
+          onClick={search}
+        >Search
+        </button>
       </div>
       {!searchResult ? (
         <p>No results yet</p>
