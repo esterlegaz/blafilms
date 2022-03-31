@@ -20,12 +20,6 @@ button {
   border-radius: 0 5px 5px 0;
 }
 
-.search {
-  margin-top: 50px;
-  display: grid;
-  grid-template-columns: 25% 40% 10% 25%;
-}
-
 .search-results {
   text-align: center;
   display: grid;

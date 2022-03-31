@@ -3,6 +3,7 @@ import './App.css';
 import { ReactComponent as ChevronLeft } from './chevron-left.svg'
 import { ReactComponent as ChevronRight } from './chevron-right.svg'
 import List from './components/List/List'
+import Search from './components/Search/Search';
 
 function App() {
   const [searchResult, setSearchResult] = useState();
@@ -48,18 +49,11 @@ function App() {
 
   return (
     <div className="App">
-      <div className="search">
-        <input
-          type="text"
-          placeholder="Search..."
-          onChange={(e) => setSearchTerm(e.target.value)}
-          value={searchTerm}
-        />
-        <button
-          onClick={search}
-        >Search
-        </button>
-      </div>
+      <Search
+        setSearchTerm={setSearchTerm}
+        searchTerm={searchTerm}
+        search={search}
+      />
       {!searchResult ?
         (
           <p>No results yet</p>
