@@ -1,0 +1,15 @@
+.search {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 25% 40% 10% 25%;
+
+    @media all and(max-width: 768px) {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.button-disabled {
+    background: #444;
+}
