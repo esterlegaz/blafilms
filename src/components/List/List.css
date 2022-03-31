@@ -36,3 +36,35 @@
 .search-item .search-item-data .meta {
     font-size: 14px;
 }
+
+.search-results-empty {
+    text-align: center;
+}
+
+.search-results {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+}
+  
+.search-results .chevron {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.search-results .chevron .icon {
+    width: 50px;
+    height: 50px;
+    fill: #1d3557;
+}
+  
+.search-results .chevron .icon:hover {
+    fill: #e63946;
+}
+
+.search-error {
+    text-align: center;
+    color: #e63946;
+    font-weight: bold;
+}
