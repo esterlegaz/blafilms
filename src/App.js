@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.scss';
 import List from './components/List/List'
 import Search from './components/Search/Search';
+import { searchMovies } from './services/api.service';
 
 function App() {
   const didMount = useRef(false);
@@ -19,8 +20,7 @@ function App() {
   }, [currentPage]);
 
   const search = async () => {
-    const response = await fetch(`http://www.omdbapi.com/?apikey=a461e386&s=${searchTerm}&page=${currentPage}`)
-    const data = await response.json();
+    const data = await searchMovies(searchTerm, currentPage);
     if (!data.Error) {
       const existingIds = [];
       const filteredResult = [];
