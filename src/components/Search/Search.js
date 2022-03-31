@@ -13,6 +13,8 @@ const Search = (props) => {
                 value={searchTerm}
             />
             <button
+                className={!searchTerm && 'button-disabled'}
+                disabled={!searchTerm}
                 onClick={search}
             >Search
             </button>
