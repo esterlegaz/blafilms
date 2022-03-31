@@ -1,6 +1,6 @@
 import React from 'react';
 import placeholderImg from './../../placeholder.png';
-import './List.css'
+import './List.scss';
 import { ReactComponent as ChevronLeft } from './../../chevron-left.svg'
 import { ReactComponent as ChevronRight } from './../../chevron-right.svg'
 

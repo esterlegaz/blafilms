@@ -2,6 +2,9 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 50%);
+    @media all and(max-width: 768px) {
+        grid-template-columns: 100%;
+    }
   }
 
 .search-item {
@@ -44,7 +47,11 @@
 .search-results {
     text-align: center;
     display: grid;
-    grid-template-columns: 25% 50% 25%;
+    grid-template-columns: 20% 60% 20%;
+    
+    @media all and(max-width: 768px) {
+        grid-template-columns: 10% 80% 10%;
+    }
 }
   
 .search-results .chevron {

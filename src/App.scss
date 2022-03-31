@@ -6,6 +6,10 @@ input[type='text'] {
   grid-column-start: 2;
   border-radius: 5px 0 0 5px;
   color: #457b9d;
+
+  @media all and(max-width: 768px) {
+    border-radius: 5px;
+  }
 }
 
 input[type='text']:focus {
@@ -18,4 +22,9 @@ button {
   color: #a8dadc;
   font-size: 24px;
   border-radius: 0 5px 5px 0;
+
+  @media all and(max-width: 768px) {
+    border-radius: 5px;
+    margin-top: 1rem;
+  }
 }
