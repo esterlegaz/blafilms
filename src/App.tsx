@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import './App.scss'
 import List from './components/List/List'
 import Search from './components/Search/Search'
+import SortBy from './components/Sort/SortBy'
 import { searchMovies } from './services/api.service'
 import { SearchResult, Film } from './components/Search/SearchTypes'
 
@@ -47,6 +48,21 @@ const App = () => {
     }
   }
 
+  const sortBy = (sortValue: string) => {
+    const bla: any = searchResult
+    console.log('soirt', sortValue)
+    const sortedResult = bla.Search.sort((a: any, b: any) => {
+      if (a[sortValue] > b[sortValue]) {
+        return 1
+      }
+      if (a[sortValue] < b[sortValue]) {
+        return -1
+      }
+      return 0
+    })
+    setSearchResult({ ...searchResult, Search: sortedResult })
+  }
+
   const goToNextPage = () => {
     const maxPages = Math.ceil((searchResult.totalResults as any) / 10)
     if (currentPage < maxPages) setCurrentPage(currentPage + 1)
@@ -63,6 +79,7 @@ const App = () => {
         searchTerm={searchTerm}
         search={search}
       />
+      {searchResult.Search && <SortBy sortBy={sortBy} />}
       <List
         results={searchResult?.Search}
         goToNextPage={goToNextPage}
