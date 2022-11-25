@@ -1,10 +1,10 @@
-import React from 'react'
-import placeholderImg from '../../assets/placeholder.png'
+import placeholderImg from './../../assets/placeholder.png'
 import './List.scss'
 import { ReactComponent as ChevronLeft } from '../../assets/chevron-left.svg'
 import { ReactComponent as ChevronRight } from '../../assets/chevron-right.svg'
+import { ListInfo } from './ListTypes'
 
-const List = props => {
+const List = (props: ListInfo) => {
   const { results, goToNextPage, goToPreviousPage, searchTerm, errorMessage } =
     props
   return (
@@ -18,7 +18,7 @@ const List = props => {
             <ChevronLeft />
           </div>
           <div className="search-results-list">
-            {results.map(result => (
+            {results.map((result: any) => (
               <div key={result.imdbID} className="search-item">
                 <img
                   src={result.Poster === 'N/A' ? placeholderImg : result.Poster}

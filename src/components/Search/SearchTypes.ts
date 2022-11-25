@@ -1,7 +1,7 @@
 export interface SearchResult {
   Result?: string
   Search?: Film[]
-  Error?: any
+  Error?: string
   totalResult?: string
 }
 
@@ -11,4 +11,10 @@ export interface Film {
   Title: string
   Type: string
   Year: string
+}
+
+export interface SearchProps {
+  search: () => void
+  searchTerm: string
+  setSearchTerm: (arg0: string) => void
 }

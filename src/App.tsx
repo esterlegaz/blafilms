@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.scss'
 import List from './components/List/List'
 import Search from './components/Search/Search'
@@ -6,12 +6,11 @@ import { searchMovies } from './services/api.service'
 import { SearchResult, Film } from './components/Search/SearchTypes'
 
 const App = () => {
-
   const didMount = useRef(false)
   const [searchResult, setSearchResult] = useState<{
     Result?: string
     Search?: Film[]
-    Error?: any
+    Error?: string
     totalResults?: string
   }>({})
   const [searchTerm, setSearchTerm] = useState<string>('')
@@ -30,12 +29,12 @@ const App = () => {
     const data: SearchResult = await searchMovies(searchTerm, currentPage)
     if (!data.Error) {
       const existingIds: number[] = []
-      const filteredResult = []
+      const filteredResult: Film[] = []
 
-      data?.Search?.forEach(searchResult => {
+      data?.Search?.forEach((searchResult: any) => {
         if (existingIds.indexOf(searchResult.imdbID) === -1) {
           existingIds.push(searchResult.imdbID)
-          filteredResult.push(searchResult as never)
+          filteredResult.push(searchResult)
         }
       })
       const finalResult = { ...data, Search: filteredResult }
@@ -49,8 +48,7 @@ const App = () => {
   }
 
   const goToNextPage = () => {
-    const maxPages = Math.ceil
-    (searchResult.totalResults as any / 10)
+    const maxPages = Math.ceil((searchResult.totalResults as any) / 10)
     if (currentPage < maxPages) setCurrentPage(currentPage + 1)
   }
 
