@@ -1,11 +1,17 @@
 import { useState } from 'react'
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material'
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+} from '@mui/material'
 import './SortBy.scss'
 
 const SortBy = (props: any) => {
   const [sortOption, setSortOption] = useState<string>('')
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: SelectChangeEvent) => {
     setSortOption(event.target.value)
     props.sortBy(event.target.value)
   }

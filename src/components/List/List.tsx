@@ -1,8 +1,9 @@
-import placeholderImg from './../../assets/placeholder.png'
+import { Link } from 'react-router-dom'
 import './List.scss'
 import { ReactComponent as ChevronLeft } from '../../assets/chevron-left.svg'
 import { ReactComponent as ChevronRight } from '../../assets/chevron-right.svg'
 import { ListInfo } from './ListTypes'
+import ListItem from './ListItem'
 
 const List = (props: ListInfo) => {
   const { results, goToNextPage, goToPreviousPage, searchTerm, errorMessage } =
@@ -19,16 +20,12 @@ const List = (props: ListInfo) => {
           </div>
           <div className="search-results-list">
             {results.map((result: any) => (
-              <div key={result.imdbID} className="search-item">
-                <img
-                  src={result.Poster === 'N/A' ? placeholderImg : result.Poster}
-                  alt="poster"
-                />
-                <div className="search-item-data">
-                  <div className="title">{result.Title}</div>
-                  <div className="meta">{`${result.Type} | ${result.Year}`}</div>
-                </div>
-              </div>
+              <Link
+                style={{ textDecoration: 'none' }}
+                to={`movie/${result.imdbID}`}
+              >
+                <ListItem movie={result} />
+              </Link>
             ))}
           </div>
           <div className="chevron" onClick={goToNextPage}>
