@@ -4,7 +4,7 @@ import './List.scss'
 const ListItem = (props: any) => {
   const movie = props.movie
   return (
-    <div key={movie.imdbID} className="search-item">
+    <div className="search-item">
       <img
         src={movie.Poster === 'N/A' ? placeholderImg : movie.Poster}
         alt="poster"

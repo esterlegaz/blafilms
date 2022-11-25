@@ -1,11 +1,15 @@
 import { useState, useEffect, useRef } from 'react'
+import { useDispatch } from 'react-redux'
 import List from '../../components/List/List'
 import Search from '../../components/Search/Search'
 import SortBy from '../../components/Sort/SortBy'
 import { searchMovies } from '../../services/api.service'
 import { SearchResult, Film } from '../../components/Search/SearchTypes'
+import { saveFetchData } from './actions'
+import './Home.scss'
 
 const Home = () => {
+  const dispatch = useDispatch()
   const didMount = useRef(false)
   const [searchResult, setSearchResult] = useState<{
     Result?: string
@@ -40,6 +44,9 @@ const Home = () => {
       const finalResult = { ...data, Search: filteredResult }
 
       setSearchResult(finalResult)
+
+      dispatch(saveFetchData(finalResult))
+
       setErrorMessage('')
     } else {
       setSearchResult({})
@@ -48,9 +55,8 @@ const Home = () => {
   }
 
   const sortBy = (sortValue: string) => {
-    const bla: any = searchResult
-    console.log('soirt', sortValue)
-    const sortedResult = bla.Search.sort((a: any, b: any) => {
+    const movies: Film[] | undefined = searchResult.Search
+    const sortedResult = movies?.sort((a: any, b: any) => {
       if (a[sortValue] > b[sortValue]) {
         return 1
       }
@@ -59,6 +65,9 @@ const Home = () => {
       }
       return 0
     })
+    const finalData = { ...searchResult, Search: sortedResult }
+    dispatch(saveFetchData(finalData))
+
     setSearchResult({ ...searchResult, Search: sortedResult })
   }
 

@@ -21,6 +21,7 @@ const List = (props: ListInfo) => {
           <div className="search-results-list">
             {results.map((result: any) => (
               <Link
+                key={result.imdbID}
                 style={{ textDecoration: 'none' }}
                 to={`movie/${result.imdbID}`}
               >
