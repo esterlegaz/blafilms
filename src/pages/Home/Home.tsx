@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
-import { useDispatch } from 'react-redux'
+import { useState, useEffect, useRef, useContext } from 'react'
+import { ReactReduxContext, useDispatch } from 'react-redux'
 import List from '../../components/List/List'
 import Search from '../../components/Search/Search'
 import SortBy from '../../components/Sort/SortBy'
@@ -9,6 +9,8 @@ import { saveFetchData } from './actions'
 import './Home.scss'
 
 const Home = () => {
+  const { store } = useContext(ReactReduxContext)
+  const moviesFromRedux = store.getState().movies
   const dispatch = useDispatch()
   const didMount = useRef(false)
   const [searchResult, setSearchResult] = useState<{
@@ -16,7 +18,7 @@ const Home = () => {
     Search?: Film[]
     Error?: string
     totalResults?: string
-  }>({})
+  }>(moviesFromRedux)
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [errorMessage, setErrorMessage] = useState<string>('')
@@ -44,7 +46,6 @@ const Home = () => {
       const finalResult = { ...data, Search: filteredResult }
 
       setSearchResult(finalResult)
-
       dispatch(saveFetchData(finalResult))
 
       setErrorMessage('')
@@ -55,7 +56,8 @@ const Home = () => {
   }
 
   const sortBy = (sortValue: string) => {
-    const movies: Film[] | undefined = searchResult.Search
+    const movies: Film[] | undefined = store.getState().movies.Search
+
     const sortedResult = movies?.sort((a: any, b: any) => {
       if (a[sortValue] > b[sortValue]) {
         return 1
@@ -65,8 +67,6 @@ const Home = () => {
       }
       return 0
     })
-    const finalData = { ...searchResult, Search: sortedResult }
-    dispatch(saveFetchData(finalData))
 
     setSearchResult({ ...searchResult, Search: sortedResult })
   }
@@ -87,7 +87,9 @@ const Home = () => {
         searchTerm={searchTerm}
         search={search}
       />
-      {searchResult.Search && <SortBy sortBy={sortBy} />}
+      {searchResult.Search && searchResult.Search.length > 0 && (
+        <SortBy sortBy={sortBy} />
+      )}
       <List
         results={searchResult?.Search}
         goToNextPage={goToNextPage}
